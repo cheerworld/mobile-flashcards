@@ -1,13 +1,13 @@
 import React from "react";
 import { Text, TouchableOpacity, StyleSheet, Platform } from "react-native";
 
-function ButtonLook({ children, onPress, style = {} }) {
+function ButtonLook({ children, onPress, btnStyle = {}, textStyle={} }) {
   return (
     <TouchableOpacity
-      style={Platform.OS === "ios" ? styles.iosBtn : styles.androidBtn}
+      style={[Platform.OS === "ios" ? styles.iosBtn : styles.androidBtn, btnStyle]}
       onPress={onPress}
     >
-      <Text style={[styles.BtnText, style]}>{children}</Text>
+      <Text style={[styles.BtnText, textStyle]}>{children}</Text>
     </TouchableOpacity>
   );
 }
@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
     paddingRight: 30,
     height: 45,
     borderRadius: 2,
-    alignSelf: "flex-end",
     justifyContent: "center",
     alignItems: "center",
   },

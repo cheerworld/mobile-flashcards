@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state, { navigation }) {
-  console.log(state, navigation);
+  //console.log(state, navigation);
   return {
     decks: Object.keys(state).length === 0 ? null : Object.values(state),
     navigation,
