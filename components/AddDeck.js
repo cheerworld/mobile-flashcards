@@ -9,22 +9,32 @@ import {
   Button,
 } from "react-native";
 import ButtonLook from "./ButtonLook";
+import { connect } from "react-redux";
+import { addDeck } from "../actions";
 
-const AddDeck = () => {
+const AddDeck = (props) => {
   const [newDeck, onChangeText] = React.useState("");
 
   const createDeck = () => {
     const deck = newDeck;
     if (deck !== "") {
-      console.log(deck);
+      const deckInfo = {
+        [deck]: {
+          title: deck,
+          questions: [],
+        },
+      };
+      console.log(deckInfo);
+      //add new deck to store
+      props.dispatch(addDeck(deckInfo));
+
+      //route to this new deck view
+      props.navigation.navigate("Decks List");
     }
 
     onChangeText("");
-    //add new deck to store
 
     //add new deck to AsyncStorage
-
-    //route to this new deck view
   };
 
   return (
@@ -45,6 +55,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-evenly",
+    alignItems: "center",
   },
   titleText: {
     fontSize: 30,
@@ -56,4 +67,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddDeck;
+function mapStateToProps(state) {
+  console.log(state);
+  return {
+    state,
+  };
+}
+export default connect(mapStateToProps)(AddDeck);
