@@ -26,7 +26,9 @@ const AddDeck = (props) => {
       };
       console.log(deckInfo);
       //add new deck to store
-      props.dispatch(addDeck(deckInfo));
+      if (!props.state[deck]) {
+        props.dispatch(addDeck(deckInfo));
+      }
 
       //route to this new deck view
       props.navigation.navigate("Decks List");

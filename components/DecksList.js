@@ -9,18 +9,31 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 
-const Item = ({ title, length }) => (
-  <View style={styles.deck}>
-    <Text style={styles.title}>{title}</Text>
-    <Text>{length} cards</Text>
-  </View>
+const Item = ({ title, length, navigation }) => (
+  <TouchableOpacity
+    onPress={() =>
+      navigation.navigate("Deck", {
+        title,
+        length,
+      })
+    }
+  >
+    <View style={styles.deck}>
+      <Text style={styles.title}>{title}</Text>
+      <Text>{length} cards</Text>
+    </View>
+  </TouchableOpacity>
 );
 
 const DecksList = (props) => {
-  console.log(props.decks);
+  console.log(props.decks, props.navigation);
 
   const renderDeck = ({ item }) => (
-    <Item title={item.title} length={item.questions.length} />
+    <Item
+      title={item.title}
+      length={item.questions.length}
+      navigation={props.navigation}
+    />
   );
 
   if (props.decks === null) {
@@ -38,7 +51,7 @@ const DecksList = (props) => {
       <FlatList
         data={props.decks}
         renderItem={renderDeck}
-        keyExtractor={item=>item.title}
+        keyExtractor={(item) => item.title}
       />
     </View>
   );
@@ -63,10 +76,11 @@ const styles = StyleSheet.create({
   },
 });
 
-function mapStateToProps(state) {
-  console.log(state, Object.keys(state).length === 0, Object.values(state));
+function mapStateToProps(state, { navigation }) {
+  console.log(state, navigation);
   return {
     decks: Object.keys(state).length === 0 ? null : Object.values(state),
+    navigation,
   };
 }
 export default connect(mapStateToProps)(DecksList);
