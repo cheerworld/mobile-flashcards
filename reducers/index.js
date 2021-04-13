@@ -16,11 +16,10 @@ export default function decks(state = {}, action) {
         },
       };
     case DELETE_DECK:
-      const { [action.title]: value, ...newList } = state;
-      console.log(newList);
-      return {
-        newList,
-      }
+      const newState = Object.assign({}, state);
+      delete newState[action.title]
+      //console.log(newState);
+      return newState;
     default:
       return state;
   }

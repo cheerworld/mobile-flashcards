@@ -13,42 +13,50 @@ import TextButton from "./TextButton";
 import { deleteDeck } from "../actions";
 
 const Deck = (props) => {
-
+  console.log(props);
   const addCard = () => {
     props.navigation.navigate("Add Card", {
       title: props.title,
-    })
-  }
+    });
+  };
 
-  const deleteDeck = () => {
-    console.log(props)
+  const deleteADeck = () => {
+    console.log(props.title);
     props.dispatch(deleteDeck(props.title));
+
     props.navigation.navigate("Home");
-  }
+  };
 
-  const startQuiz = () => {
+  const startQuiz = () => {};
 
+  if (!props.deck) {
+    return null;
   }
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{props.title}</Text>
-      <Text>{props.length} cards</Text>
-      <ButtonLook onPress={addCard}>
-        Add Card
-      </ButtonLook>
+      <Text>{props.deck.questions.length} cards</Text>
+      <ButtonLook onPress={addCard}>Add Card</ButtonLook>
       <ButtonLook
         onPress={startQuiz}
-        btnStyle={{backgroundColor:"#364f6b"}}
-        textStyle={{color:"#f5f5f5"}}>
+        btnStyle={{ backgroundColor: "#364f6b" }}
+        textStyle={{ color: "#f5f5f5" }}
+      >
         Start Quiz
       </ButtonLook>
-      <TextButton onPress={deleteDeck} style={{ margin: 20 }}>
+      <TextButton onPress={deleteADeck} style={{ margin: 20 }}>
         Delete Deck
       </TextButton>
     </View>
   );
 };
+
+//function checkToRender(nextProps) {
+//return nextProps.deck.length!==0;
+//}
+
+//const checkDeck = React.memo(Deck, checkToRender)
 
 const styles = StyleSheet.create({
   container: {
@@ -65,10 +73,11 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state, { route, navigation }) {
   const { title } = route.params;
-  console.log(title);
+  console.log(state);
+  console.log(state[title]);
   return {
+    deck: state[title],
     title,
-    length: state[title].questions.length,
     navigation,
   };
 }
