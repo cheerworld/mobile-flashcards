@@ -14,7 +14,6 @@ const Item = ({ title, length, navigation }) => (
     onPress={() =>
       navigation.navigate("Deck", {
         title,
-        length,
       })
     }
   >

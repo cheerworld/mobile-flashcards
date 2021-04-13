@@ -17,6 +17,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import Deck from "./components/Deck";
+import AddCard from "./components/AddCard";
 
 const Tab =
   Platform.OS === "ios"
@@ -44,6 +45,7 @@ function MainNavigator() {
           options={{ headerShown: false }}
         />
         <Stack.Screen name="Deck" component={Deck} />
+        <Stack.Screen name="Add Card" component={AddCard} />
       </Stack.Navigator>
     </NavigationContainer>
   );

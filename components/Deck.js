@@ -12,11 +12,18 @@ import ButtonLook from "./ButtonLook";
 import TextButton from "./TextButton";
 
 const Deck = (props) => {
+
+  const addCard = () => {
+    props.navigation.navigate("Add Card", {
+      title: props.title,
+    })
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{props.title}</Text>
-      <Text>{props.length}</Text>
-      <ButtonLook>
+      <Text>{props.length} cards</Text>
+      <ButtonLook onPress={addCard}>
         Add Card
       </ButtonLook>
       <ButtonLook btnStyle={{backgroundColor:"#364f6b"}} textStyle={{color:"#f5f5f5"}}>
@@ -42,13 +49,13 @@ const styles = StyleSheet.create({
   },
 });
 
-function mapStateToProps(state, { route }) {
-  const { title, length } = route.params;
-  console.log(title, length);
+function mapStateToProps(state, { route, navigation }) {
+  const { title } = route.params;
+  console.log(title);
   return {
-    deck: state[title],
     title,
-    length,
+    length: state[title].questions.length,
+    navigation,
   };
 }
 export default connect(mapStateToProps)(Deck);
