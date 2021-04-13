@@ -19,6 +19,10 @@ const Deck = (props) => {
     })
   }
 
+  const deleteDeck = () => {
+    
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{props.title}</Text>
@@ -26,10 +30,13 @@ const Deck = (props) => {
       <ButtonLook onPress={addCard}>
         Add Card
       </ButtonLook>
-      <ButtonLook btnStyle={{backgroundColor:"#364f6b"}} textStyle={{color:"#f5f5f5"}}>
+      <ButtonLook
+        onPress={startQuiz}
+        btnStyle={{backgroundColor:"#364f6b"}}
+        textStyle={{color:"#f5f5f5"}}>
         Start Quiz
       </ButtonLook>
-      <TextButton>
+      <TextButton onpress={deleteDeck}>
         Delete Deck
       </TextButton>
     </View>

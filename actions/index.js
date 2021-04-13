@@ -1,5 +1,6 @@
 export const ADD_DECK = "ADD_DECK";
 export const ADD_CARD = "ADD_CARD";
+export const DELETE_DECK = "DELETE_DECK";
 
 export function addDeck(deck) {
   return {
@@ -14,4 +15,11 @@ export function addCard(title, question) {
     title,
     question,
   };
+}
+
+export function deleteDeck(title) {
+  return {
+    type: DELETE_DECK,
+    title,
+  }
 }
