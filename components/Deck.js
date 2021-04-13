@@ -10,6 +10,7 @@ import {
 import { connect } from "react-redux";
 import ButtonLook from "./ButtonLook";
 import TextButton from "./TextButton";
+import { deleteDeck } from "../actions";
 
 const Deck = (props) => {
 
@@ -20,7 +21,13 @@ const Deck = (props) => {
   }
 
   const deleteDeck = () => {
-    
+    console.log(props)
+    props.dispatch(deleteDeck(props.title));
+    props.navigation.navigate("Home");
+  }
+
+  const startQuiz = () => {
+
   }
 
   return (
@@ -36,7 +43,7 @@ const Deck = (props) => {
         textStyle={{color:"#f5f5f5"}}>
         Start Quiz
       </ButtonLook>
-      <TextButton onpress={deleteDeck}>
+      <TextButton onPress={deleteDeck} style={{ margin: 20 }}>
         Delete Deck
       </TextButton>
     </View>
