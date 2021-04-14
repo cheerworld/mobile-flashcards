@@ -27,7 +27,11 @@ const Deck = (props) => {
     props.navigation.navigate("Home");
   };
 
-  const startQuiz = () => {};
+  const startQuiz = () => {
+    props.navigation.navigate("Quiz", {
+      title: props.title,
+    });
+  };
 
   if (!props.deck) {
     return null;
@@ -51,12 +55,6 @@ const Deck = (props) => {
     </View>
   );
 };
-
-//function checkToRender(nextProps) {
-//return nextProps.deck.length!==0;
-//}
-
-//const checkDeck = React.memo(Deck, checkToRender)
 
 const styles = StyleSheet.create({
   container: {

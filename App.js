@@ -18,6 +18,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { createStackNavigator } from "@react-navigation/stack";
 import Deck from "./components/Deck";
 import AddCard from "./components/AddCard";
+import Quiz from "./components/Quiz";
 
 const Tab =
   Platform.OS === "ios"
@@ -46,6 +47,7 @@ function MainNavigator() {
         />
         <Stack.Screen name="Deck" component={Deck} />
         <Stack.Screen name="Add Card" component={AddCard} />
+        <Stack.Screen name="Quiz" component={Quiz} />
       </Stack.Navigator>
     </NavigationContainer>
   );
