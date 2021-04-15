@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -8,6 +8,8 @@ import {
   FlatList,
 } from "react-native";
 import { connect } from "react-redux";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { DECKLIST, getDeckList } from "../actions";
 
 const Item = ({ title, length, navigation }) => (
   <TouchableOpacity
@@ -26,6 +28,17 @@ const Item = ({ title, length, navigation }) => (
 
 const DecksList = (props) => {
   console.log(props.decks, props.navigation);
+
+  useEffect(() => {
+    AsyncStorage.getItem(DECKLIST)
+      .then(JSON.parse)
+      .then((decks) =>{
+        if (decks!==null){
+          props.dispatch(getDeckList(decks))
+        }
+      })
+      .catch((e) => console.error(e))
+  })
 
   const renderDeck = ({ item }) => (
     <Item

@@ -1,7 +1,11 @@
-import { ADD_DECK, ADD_CARD, DELETE_DECK } from "../actions";
+import { ADD_DECK, ADD_CARD, DELETE_DECK, GET_DECKLIST } from "../actions";
 
 export default function decks(state = {}, action) {
   switch (action.type) {
+    case GET_DECKLIST:
+      return {
+        ...action.decks,
+      };
     case ADD_DECK:
       return {
         ...state,

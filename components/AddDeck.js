@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import ButtonLook from "./ButtonLook";
 import { connect } from "react-redux";
-import { addDeck } from "../actions";
+import { addDeckAsync } from "../actions";
 
 const AddDeck = (props) => {
   const [newDeck, onChangeText] = React.useState("");
@@ -27,7 +27,7 @@ const AddDeck = (props) => {
       console.log(deckInfo);
       //add new deck to store
       if (!props.state[deck]) {
-        props.dispatch(addDeck(deckInfo));
+        props.dispatch(addDeckAsync(deckInfo));
       }
 
       //route to this new deck view

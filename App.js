@@ -12,6 +12,7 @@ import DecksList from "./components/DecksList";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import reducer from "./reducers";
+import middleware from "./middleware";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -56,7 +57,7 @@ function MainNavigator() {
 export default class App extends React.Component {
   render() {
     return (
-      <Provider store={createStore(reducer)}>
+      <Provider store={createStore(reducer, middleware)}>
         <StatusBar style="auto" />
         <KeyboardAvoidingView
           style={styles.container}
