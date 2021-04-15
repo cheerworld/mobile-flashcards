@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export const ADD_DECK = "ADD_DECK";
 export const ADD_CARD = "ADD_CARD";
 export const DELETE_DECK = "DELETE_DECK";
@@ -10,7 +10,7 @@ export function getDeckList(decks) {
   return {
     type: GET_DECKLIST,
     decks,
-  }
+  };
 }
 
 export function addDeck(deck) {
@@ -32,14 +32,25 @@ export function deleteDeck(title) {
   return {
     type: DELETE_DECK,
     title,
-  }
+  };
 }
 
 export function addDeckAsync(deck) {
-  return (dispatch) => {
-      dispatch(addDeck(deck));
+  return async (dispatch) => {
+    try {
+      await dispatch(addDeck(deck));
       const jsonDeck = JSON.stringify(deck);
-      return AsyncStorage.setItem(DECKLIST, jsonDeck)
-        .catch((e) => console.error(e))
-  }
+      const getDecks = await AsyncStorage.getItem(DECKLIST);
+      if (getDecks === null) {
+        return await AsyncStorage.setItem(DECKLIST, jsonDeck).catch((e) =>
+          console.error(e)
+        );
+      }
+      return await AsyncStorage.mergeItem(DECKLIST, jsonDeck).catch((e) =>
+        console.error(e)
+      );
+    } catch (e) {
+      (e) => console.error(e);
+    }
+  };
 }

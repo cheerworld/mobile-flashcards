@@ -31,14 +31,15 @@ const DecksList = (props) => {
 
   useEffect(() => {
     AsyncStorage.getItem(DECKLIST)
-      .then(JSON.parse)
-      .then((decks) =>{
+      .then((data) =>{
+        console.log(data)
+        const decks = JSON.parse(data);
         if (decks!==null){
           props.dispatch(getDeckList(decks))
         }
       })
       .catch((e) => console.error(e))
-  })
+  }, [props.decksString])
 
   const renderDeck = ({ item }) => (
     <Item
@@ -91,6 +92,7 @@ const styles = StyleSheet.create({
 function mapStateToProps(state, { navigation }) {
   //console.log(state, navigation);
   return {
+    decksString: JSON.stringify(state),
     decks: Object.keys(state).length === 0 ? null : Object.values(state),
     navigation,
   };

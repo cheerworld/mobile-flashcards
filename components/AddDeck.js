@@ -24,7 +24,6 @@ const AddDeck = (props) => {
           questions: [],
         },
       };
-      console.log(deckInfo);
       //add new deck to store
       if (!props.state[deck]) {
         props.dispatch(addDeckAsync(deckInfo));
