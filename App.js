@@ -20,6 +20,15 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Deck from "./components/Deck";
 import AddCard from "./components/AddCard";
 import Quiz from "./components/Quiz";
+import Constants from "expo-constants";
+
+function UdaciStatusBar({ backgroundColor, ...props }) {
+  return (
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+    </View>
+  );
+}
 
 const Tab =
   Platform.OS === "ios"
@@ -58,11 +67,12 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={createStore(reducer, middleware)}>
-        <StatusBar style="auto" />
         <KeyboardAvoidingView
           style={styles.container}
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
+          <UdaciStatusBar backgroundColor="#364f6b" barStyle="light-content" />
+
           <MainNavigator />
         </KeyboardAvoidingView>
       </Provider>
