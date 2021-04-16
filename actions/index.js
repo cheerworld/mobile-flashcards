@@ -35,10 +35,47 @@ export function deleteDeck(title) {
   };
 }
 
+export function deleteDeckAsync(title) {
+  return async (dispatch) => {
+    try {
+      dispatch(deleteDeck(title));
+      const decks = await AsyncStorage.getItem(DECKLIST);
+      const parseDecks = JSON.parse(decks);
+      delete parseDecks[title];
+      return await AsyncStorage.setItem(DECKLIST, JSON.stringify(parseDecks));
+    } catch (e) {
+      console.error(e);
+    }
+  };
+}
+
+export function addCardAsync(title, question) {
+  return async (dispatch) => {
+    try {
+      dispatch(addCard(title, question));
+      const decks = await AsyncStorage.getItem(DECKLIST);
+      const parseDecks = JSON.parse(decks);
+      const deck = parseDecks[title];
+      const updateQQ = [...deck.questions, question];
+      console.log(updateQQ);
+      return await AsyncStorage.mergeItem(
+        DECKLIST,
+        JSON.stringify({
+          [title]: {
+            questions: updateQQ,
+          },
+        })
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  };
+}
+
 export function addDeckAsync(deck) {
   return async (dispatch) => {
     try {
-      await dispatch(addDeck(deck));
+      dispatch(addDeck(deck));
       const jsonDeck = JSON.stringify(deck);
       const getDecks = await AsyncStorage.getItem(DECKLIST);
       if (getDecks === null) {
@@ -50,7 +87,7 @@ export function addDeckAsync(deck) {
         console.error(e)
       );
     } catch (e) {
-      (e) => console.error(e);
+      console.error(e);
     }
   };
 }

@@ -10,7 +10,7 @@ import {
 import { connect } from "react-redux";
 import ButtonLook from "./ButtonLook";
 import TextButton from "./TextButton";
-import { deleteDeck } from "../actions";
+import { deleteDeckAsync } from "../actions";
 
 const Deck = (props) => {
   console.log(props);
@@ -22,7 +22,7 @@ const Deck = (props) => {
 
   const deleteADeck = () => {
     console.log(props.title);
-    props.dispatch(deleteDeck(props.title));
+    props.dispatch(deleteDeckAsync(props.title));
 
     props.navigation.navigate("Home");
   };
@@ -72,7 +72,6 @@ const styles = StyleSheet.create({
 function mapStateToProps(state, { route, navigation }) {
   const { title } = route.params;
   console.log(state);
-  console.log(state[title]);
   return {
     deck: state[title],
     title,

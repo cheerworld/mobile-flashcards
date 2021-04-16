@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import ButtonLook from "./ButtonLook";
 import { connect } from "react-redux";
-import { addCard } from "../actions";
+import { addCardAsync } from "../actions";
 
 const AddCard = (props) => {
   const [question, onChangeQuestion] = React.useState("");
@@ -22,7 +22,7 @@ const AddCard = (props) => {
         question,
         answer,
       };
-      props.dispatch(addCard(props.title, newQQ));
+      props.dispatch(addCardAsync(props.title, newQQ));
       props.navigation.goBack();
     }
   };
