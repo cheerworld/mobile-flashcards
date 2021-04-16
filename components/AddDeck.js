@@ -48,6 +48,7 @@ const AddDeck = (props) => {
         onChangeText={onChangeText}
         value={newDeck}
         placeholder="Deck Title"
+        maxLength={100}
       />
       <ButtonLook onPress={createDeck}>Create Deck</ButtonLook>
     </View>
@@ -67,6 +68,9 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     borderWidth: 1,
+    paddingLeft: 5,
+    paddingRight: 5,
+    fontSize: 20,
   },
 });
 

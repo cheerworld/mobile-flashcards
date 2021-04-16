@@ -46,16 +46,19 @@ const DecksList = (props) => {
   console.log(props.decks, props.navigation);
 
   useEffect(() => {
+    let isSubscribed = true;
     AsyncStorage.getItem(DECKLIST)
       .then((data) => {
-        console.log(data);
-        const decks = JSON.parse(data);
-        if (decks !== null) {
-          props.dispatch(getDeckList(decks));
+        if(isSubscribed){
+          const decks = JSON.parse(data);
+          if (decks !== null) {
+            props.dispatch(getDeckList(decks));
+          }
         }
       })
       .catch((e) => console.error(e));
-  }, [props.decksString]);
+    return () => (isSubscribed = false);
+  }, []);
 
   const renderDeck = ({ item }) => (
     <Item
