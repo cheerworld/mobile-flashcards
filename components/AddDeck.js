@@ -30,7 +30,9 @@ const AddDeck = (props) => {
       }
 
       //route to this new deck view
-      props.navigation.navigate("Decks List");
+      props.navigation.navigate("Deck", {
+        title: deck,
+      });
     }
 
     onChangeText("");
