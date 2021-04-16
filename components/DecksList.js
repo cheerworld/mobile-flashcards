@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -6,40 +6,56 @@ import {
   Platform,
   TouchableOpacity,
   FlatList,
+  Animated,
 } from "react-native";
 import { connect } from "react-redux";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DECKLIST, getDeckList } from "../actions";
 
-const Item = ({ title, length, navigation }) => (
-  <TouchableOpacity
-    onPress={() =>
-      navigation.navigate("Deck", {
-        title,
-      })
-    }
-  >
-    <View style={styles.deck}>
-      <Text style={styles.title}>{title}</Text>
-      <Text>{length} cards</Text>
-    </View>
-  </TouchableOpacity>
-);
+const Item = ({ title, length, navigation }) => {
+  const fade = useRef(new Animated.Value(1)).current;
+  const deckPress = () => {
+    Animated.sequence([
+      Animated.timing(fade, {
+        duration: 200,
+        toValue: 1.04,
+        useNativeDriver: false,
+      }),
+      Animated.spring(fade, {
+        toValue: 1,
+        friction: 4,
+        useNativeDriver: false,
+      }),
+    ]).start();
+    navigation.navigate("Deck", {
+      title,
+    });
+  };
+
+  return (
+    <TouchableOpacity onPress={deckPress}>
+      <Animated.View style={[styles.deck, { transform: [{ scale: fade }] }]}>
+        <Text style={styles.title}>{title}</Text>
+        <Text>{length} cards</Text>
+      </Animated.View>
+    </TouchableOpacity>
+  );
+};
 
 const DecksList = (props) => {
   console.log(props.decks, props.navigation);
 
   useEffect(() => {
     AsyncStorage.getItem(DECKLIST)
-      .then((data) =>{
-        console.log(data)
+      .then((data) => {
+        console.log(data);
         const decks = JSON.parse(data);
-        if (decks!==null){
-          props.dispatch(getDeckList(decks))
+        if (decks !== null) {
+          props.dispatch(getDeckList(decks));
         }
       })
-      .catch((e) => console.error(e))
-  }, [props.decksString])
+      .catch((e) => console.error(e));
+  }, [props.decksString]);
 
   const renderDeck = ({ item }) => (
     <Item
