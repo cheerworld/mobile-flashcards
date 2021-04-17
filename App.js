@@ -22,6 +22,7 @@ import Deck from "./components/Deck";
 import AddCard from "./components/AddCard";
 import Quiz from "./components/Quiz";
 import Constants from "expo-constants";
+import { FontAwesome, Entypo } from '@expo/vector-icons';
 
 function UdaciStatusBar({ backgroundColor, ...props }) {
   return (
@@ -38,9 +39,42 @@ const Tab =
 
 function MyTabs() {
   return (
-    <Tab.Navigator initialRouteName="Decks List">
-      <Tab.Screen name="Decks List" component={DecksList} />
-      <Tab.Screen name="Add Deck" component={AddDeck} />
+    <Tab.Navigator
+      initialRouteName="Decks List"
+      tabBarOptions={{
+        activeTintColor: Platform.OS === "ios" ? "#364f6b" : "#f5f5f5",
+        style: {
+          height: 56,
+          backgroundColor: Platform.OS === "ios" ? "#f5f5f5" : "#364f6b",
+          shadowColor: "rgba(0, 0, 0, 0.24)",
+          shadowOffset: {
+            width: 0,
+            height: 3,
+          },
+          shadowRadius: 6,
+          shadowOpacity: 1,
+        }
+      }}
+    >
+      <Tab.Screen
+        name="Decks List"
+        component={DecksList}
+        options={{
+          tabBarLabel: "Decks List",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome name="list-alt" size={25} color={color} />
+          )
+        }}/>
+      <Tab.Screen
+        name="Add Deck"
+        component={AddDeck}
+        options={{
+          tabBarLabel: "Add Deck",
+          tabBarIcon: ({ color }) => (
+            <Entypo name="add-to-list" size={25} color={color} />
+          )
+        }}
+        />
     </Tab.Navigator>
   );
 }

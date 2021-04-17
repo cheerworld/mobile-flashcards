@@ -33,12 +33,14 @@ const AddCard = (props) => {
         onChangeText={onChangeQuestion}
         value={question}
         placeholder="Question"
+        maxLength={100}
       />
       <TextInput
         style={styles.input}
         onChangeText={onChangeAnswer}
         value={answer}
         placeholder="Answer"
+        maxLength={100}
       />
       <ButtonLook onPress={submit}>Submit</ButtonLook>
     </View>
@@ -56,8 +58,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   input: {
-    height: 40,
-    borderWidth: 1,
+    height: 50,
+    width: 350,
+    borderWidth: 2,
+    borderRadius: 10,
+    paddingLeft: 5,
+    paddingRight: 5,
+    fontSize: 20,
+    marginLeft: 10,
+    marginRight: 10,
   },
 });
 

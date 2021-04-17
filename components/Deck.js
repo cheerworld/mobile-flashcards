@@ -40,7 +40,7 @@ const Deck = (props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{props.title}</Text>
-      <Text>{props.deck.questions.length} cards</Text>
+      <Text style={styles.count}>{props.deck.questions.length} cards</Text>
       <ButtonLook onPress={addCard}>Add Card</ButtonLook>
       <ButtonLook
         onPress={startQuiz}
@@ -61,12 +61,20 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "space-evenly",
+    marginLeft: 10,
+    marginRight: 10
   },
   title: {
     fontSize: 30,
+    fontWeight: "bold",
     color: "#364f6b",
+
     //wordBreak: "break-word",
   },
+  count: {
+    fontSize: 20,
+    color: "#364f6b",
+  }
 });
 
 function mapStateToProps(state, { route, navigation }) {

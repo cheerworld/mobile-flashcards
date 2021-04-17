@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   BtnText: {
     color: "#f5f5f5",
-    fontSize: 22,
+    fontSize: 25,
     textAlign: "center",
   },
   center: {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -6,38 +6,24 @@ import {
   Platform,
   TouchableOpacity,
   FlatList,
-  Animated,
 } from "react-native";
 import { connect } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DECKLIST, getDeckList } from "../actions";
 
 const Item = ({ title, length, navigation }) => {
-  const fade = useRef(new Animated.Value(1)).current;
-  const deckPress = () => {
-    Animated.sequence([
-      Animated.timing(fade, {
-        duration: 200,
-        toValue: 1.04,
-        useNativeDriver: false,
-      }),
-      Animated.spring(fade, {
-        toValue: 1,
-        friction: 4,
-        useNativeDriver: false,
-      }),
-    ]).start();
-    navigation.navigate("Deck", {
-      title,
-    });
-  };
-
   return (
-    <TouchableOpacity onPress={deckPress}>
-      <Animated.View style={[styles.deck, { transform: [{ scale: fade }] }]}>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate("Deck", {
+          title,
+        })
+      }
+    >
+      <View style={styles.deck}>
         <Text style={styles.title}>{title}</Text>
-        <Text>{length} cards</Text>
-      </Animated.View>
+        <Text style={styles.count}>{length} cards</Text>
+      </View>
     </TouchableOpacity>
   );
 };
@@ -46,18 +32,24 @@ const DecksList = (props) => {
   console.log(props.decks, props.navigation);
 
   useEffect(() => {
-    let isSubscribed = true;
-    AsyncStorage.getItem(DECKLIST)
+    const abortController = new AbortController();
+    let mounted = true;
+
+    AsyncStorage.getItem(DECKLIST, () => ({
+      signal: abortController.signal,
+    }))
       .then((data) => {
-        if(isSubscribed){
-          const decks = JSON.parse(data);
-          if (decks !== null) {
-            props.dispatch(getDeckList(decks));
-          }
+        const decks = JSON.parse(data);
+        if (mounted && decks !== null) {
+          props.dispatch(getDeckList(decks));
         }
       })
       .catch((e) => console.error(e));
-    return () => (isSubscribed = false);
+
+    return () => {
+      mounted = false;
+      abortController.abort();
+    };
   }, []);
 
   const renderDeck = ({ item }) => (
@@ -94,6 +86,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    marginTop: 20,
+    marginBottom: 20,
   },
   deck: {
     backgroundColor: "#fc5185",
@@ -104,7 +98,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     color: "#f5f5f5",
+    textAlign: "center",
     //wordBreak: "break-word",
+  },
+  count: {
+    textAlign: "center",
+    color: "#f5f5f5",
+    fontSize: 20,
+    marginTop: 10,
   },
 });
 
