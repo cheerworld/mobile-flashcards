@@ -11,6 +11,10 @@ import { connect } from "react-redux";
 import ButtonLook from "./ButtonLook";
 import TextButton from "./TextButton";
 import { deleteDeckAsync } from "../actions";
+import {
+  clearLocalNotification,
+  setLocalNotification
+ } from "../utils/helpers";
 
 const Deck = (props) => {
   console.log(props);
@@ -31,6 +35,10 @@ const Deck = (props) => {
     props.navigation.navigate("Quiz", {
       title: props.title,
     });
+
+    clearLocalNotification()
+      .then(setLocalNotification)
+      
   };
 
   if (!props.deck) {

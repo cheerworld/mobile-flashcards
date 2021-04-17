@@ -23,6 +23,7 @@ import AddCard from "./components/AddCard";
 import Quiz from "./components/Quiz";
 import Constants from "expo-constants";
 import { FontAwesome, Entypo } from '@expo/vector-icons';
+import { setLocalNotification } from './utils/helpers';
 
 function UdaciStatusBar({ backgroundColor, ...props }) {
   return (
@@ -99,6 +100,9 @@ function MainNavigator() {
 }
 
 export default class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification()
+  }
   render() {
     return (
       <Provider store={createStore(reducer, middleware)}>
