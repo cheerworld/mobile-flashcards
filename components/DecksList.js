@@ -34,18 +34,20 @@ const DecksList = (props) => {
   useEffect(() => {
     const abortController = new AbortController();
     let mounted = true;
+    const callAsync = () => {
+      AsyncStorage.getItem(DECKLIST, () => ({
+        signal: abortController.signal,
+      }))
+        .then((data) => {
+          const decks = JSON.parse(data);
+          if (mounted && decks !== null) {
+            props.dispatch(getDeckList(decks));
+          }
+        })
+        .catch((e) => console.error(e));
+    }
 
-    AsyncStorage.getItem(DECKLIST, () => ({
-      signal: abortController.signal,
-    }))
-      .then((data) => {
-        const decks = JSON.parse(data);
-        if (mounted && decks !== null) {
-          props.dispatch(getDeckList(decks));
-        }
-      })
-      .catch((e) => console.error(e));
-
+    callAsync()
     return () => {
       mounted = false;
       abortController.abort();
@@ -63,7 +65,7 @@ const DecksList = (props) => {
   if (props.decks === null) {
     return (
       <View style={styles.container}>
-        <Text>
+        <Text style={styles.noDeck}>
           There is no decks in here right now, please click the Add Deck tab to
           add your deck.
         </Text>
@@ -107,6 +109,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 10,
   },
+  noDeck: {
+    fontSize: 30,
+    color: "#364f6b",
+    marginLeft: 10,
+    marginRight: 10,
+  }
 });
 
 function mapStateToProps(state, { navigation }) {

@@ -63,7 +63,7 @@ function MyTabs() {
         options={{
           tabBarLabel: "Decks List",
           tabBarIcon: ({ color }) => (
-            <FontAwesome name="list-alt" size={25} color={color} />
+            <FontAwesome name="list-alt" size={30} color={color} />
           )
         }}/>
       <Tab.Screen
@@ -72,7 +72,7 @@ function MyTabs() {
         options={{
           tabBarLabel: "Add Deck",
           tabBarIcon: ({ color }) => (
-            <Entypo name="add-to-list" size={25} color={color} />
+            <Entypo name="add-to-list" size={30} color={color} />
           )
         }}
         />
