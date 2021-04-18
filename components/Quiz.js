@@ -10,6 +10,7 @@ import {
 import { connect } from "react-redux";
 import TextButton from "./TextButton";
 import ButtonLook from "./ButtonLook";
+import { shuffleArray } from "../utils/helpers";
 
 const Quiz = (props) => {
   const [count, onChangeCount] = React.useState(0);
@@ -33,6 +34,7 @@ const Quiz = (props) => {
   };
 
   const restart = () => {
+    shuffleArray(questions);
     onChangeCount(0);
     onChangeCorrect(0);
     onChangeQA(true);
@@ -82,7 +84,7 @@ const Quiz = (props) => {
         <Text style={styles.title}>
           {flipQA ? questions[count].question : questions[count].answer}
         </Text>
-        <TextButton onPress={flip}>{flipQA ? "Question" : "Answer"}</TextButton>
+        <TextButton onPress={flip}>{flipQA ? "Answer" : "Question"}</TextButton>
       </View>
       <View style={styles.button}>
         <ButtonLook onPress={correctPress}>Correct</ButtonLook>
@@ -139,7 +141,7 @@ function mapStateToProps(state, { route, navigation }) {
   const { title } = route.params;
   return {
     deck: state[title],
-    questions: state[title].questions,
+    questions: shuffleArray(state[title].questions),
     navigation,
   };
 }
