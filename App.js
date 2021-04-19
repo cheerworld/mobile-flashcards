@@ -43,6 +43,7 @@ function MyTabs() {
     <Tab.Navigator
       initialRouteName="Decks List"
       tabBarOptions={{
+        labelPosition: "below-icon",
         activeTintColor: Platform.OS === "ios" ? "#364f6b" : "#f5f5f5",
         style: {
           height: 56,
@@ -85,7 +86,11 @@ const Stack = createStackNavigator();
 function MainNavigator() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerTintColor: "#364f6b",
+        }}
+      >
         <Stack.Screen
           name="Home"
           component={MyTabs}

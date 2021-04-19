@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -17,6 +17,13 @@ import {
  } from "../utils/helpers";
 
 const Deck = (props) => {
+  useEffect(() => {
+    if(!props.title) return;
+    props.navigation.setOptions({
+      title: props.title,
+    })
+  }, [])
+
   console.log(props);
   const addCard = () => {
     props.navigation.navigate("Add Card", {
@@ -36,9 +43,10 @@ const Deck = (props) => {
       title: props.title,
     });
 
-    clearLocalNotification()
-      .then(setLocalNotification)
-      
+    if(Platform.OS==="ios" && Platform.OS==="android"){
+      clearLocalNotification()
+        .then(setLocalNotification)
+    }
   };
 
   if (!props.deck) {
