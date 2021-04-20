@@ -2,7 +2,7 @@
 
 This is the project for Udacity's React-Native course. The Mobile Flashcards app is built for students to quiz themselves, review the questions, and help them to better memorize what they've learned.
 I build a React-Native Front-End for the application. I used [Create React Native App](https://github.com/expo/create-react-native-app), [Redux](https://redux.js.org/), [React Navigation](https://reactnavigation.org/), [Async Storage](https://react-native-async-storage.github.io/async-storage/) and [Expo](https://docs.expo.io/) for this project.
-This app is tested on the Iphone and web.
+This app is tested on the ios Platform and website.
 
 ## App view
 

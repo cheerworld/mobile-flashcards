@@ -39,6 +39,7 @@ const AddDeck = (props) => {
 
     //add new deck to AsyncStorage
   };
+  const deckLeft = 50 - newDeck.length;
 
   return (
     <View style={styles.container}>
@@ -50,6 +51,7 @@ const AddDeck = (props) => {
         placeholder="Deck Title"
         maxLength={50}
       />
+      {deckLeft <= 10 && <Text style={styles.lengthLeft}>{deckLeft}</Text>}
       <ButtonLook onPress={createDeck}>Create Deck</ButtonLook>
     </View>
   );
@@ -76,6 +78,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginLeft: 10,
     marginRight: 10,
+  },
+  lengthLeft: {
+    fontSize: 20,
+    color: "#fc5185",
   },
 });
 

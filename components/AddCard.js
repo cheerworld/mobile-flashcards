@@ -26,6 +26,10 @@ const AddCard = (props) => {
       props.navigation.goBack();
     }
   };
+
+  const qqLeft = 100 - question.length;
+  const answerLeft = 100 - answer.length;
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -35,6 +39,7 @@ const AddCard = (props) => {
         placeholder="Question"
         maxLength={100}
       />
+      {qqLeft <= 10 && <Text style={styles.lengthLeft}>{qqLeft}</Text>}
       <TextInput
         style={styles.input}
         onChangeText={onChangeAnswer}
@@ -42,6 +47,7 @@ const AddCard = (props) => {
         placeholder="Answer"
         maxLength={100}
       />
+      {answerLeft <= 10 && <Text style={styles.lengthLeft}>{answerLeft}</Text>}
       <ButtonLook onPress={submit}>Submit</ButtonLook>
     </View>
   );
@@ -67,6 +73,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginLeft: 10,
     marginRight: 10,
+  },
+  lengthLeft: {
+    fontSize: 20,
+    color: "#fc5185",
   },
 });
 

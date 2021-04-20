@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -30,26 +30,28 @@ const Item = ({ title, length, navigation }) => {
 
 const DecksList = (props) => {
   console.log(props.decks, props.navigation);
+  const isMounted = useRef(true);
 
   useEffect(() => {
     const abortController = new AbortController();
-    let mounted = true;
+
     const callAsync = () => {
+      if (!isMounted.current) return;
       AsyncStorage.getItem(DECKLIST, () => ({
         signal: abortController.signal,
       }))
         .then((data) => {
           const decks = JSON.parse(data);
-          if (mounted && decks !== null) {
+          if (isMounted.current && decks !== null) {
             props.dispatch(getDeckList(decks));
           }
         })
         .catch((e) => console.error(e));
-    }
+    };
 
-    callAsync()
+    callAsync();
     return () => {
-      mounted = false;
+      isMounted.current = false;
       abortController.abort();
     };
   }, []);
@@ -114,7 +116,7 @@ const styles = StyleSheet.create({
     color: "#364f6b",
     marginLeft: 10,
     marginRight: 10,
-  }
+  },
 });
 
 function mapStateToProps(state, { navigation }) {
