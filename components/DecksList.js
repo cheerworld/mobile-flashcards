@@ -10,6 +10,7 @@ import {
 import { connect } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DECKLIST, getDeckList } from "../actions";
+import PropTypes from 'prop-types';
 
 const Item = ({ title, length, navigation }) => {
   return (
@@ -103,7 +104,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: "#f5f5f5",
     textAlign: "center",
-    //wordBreak: "break-word",
   },
   count: {
     textAlign: "center",
@@ -120,11 +120,21 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state, { navigation }) {
-  //console.log(state, navigation);
   return {
-    decksString: JSON.stringify(state),
     decks: Object.keys(state).length === 0 ? null : Object.values(state),
     navigation,
   };
 }
+
+DecksList.propTypes = {
+  decks:PropTypes.array,
+  navigation: PropTypes.object.isRequired,
+}
+
+Item.propTypes = {
+  title: PropTypes.string.isRequired,
+  length: PropTypes.number.isRequired,
+  navigation: PropTypes.object.isRequired,
+}
+
 export default connect(mapStateToProps)(DecksList);

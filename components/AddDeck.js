@@ -11,6 +11,7 @@ import {
 import ButtonLook from "./ButtonLook";
 import { connect } from "react-redux";
 import { addDeckAsync } from "../actions";
+ import PropTypes from 'prop-types';
 
 const AddDeck = (props) => {
   const [newDeck, onChangeText] = React.useState("");
@@ -86,9 +87,15 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-  //console.log(state);
+
   return {
     state,
   };
 }
+
+AddDeck.propTypes = {
+  state: PropTypes.object.isRequired,
+  navigation: PropTypes.object.isRequired,
+}
+
 export default connect(mapStateToProps)(AddDeck);

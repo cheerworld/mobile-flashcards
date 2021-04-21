@@ -15,6 +15,7 @@ import {
   clearLocalNotification,
   setLocalNotification
  } from "../utils/helpers";
+ import PropTypes from 'prop-types';
 
 const Deck = (props) => {
   useEffect(() => {
@@ -84,8 +85,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "bold",
     color: "#364f6b",
-
-    //wordBreak: "break-word",
   },
   count: {
     fontSize: 20,
@@ -102,4 +101,11 @@ function mapStateToProps(state, { route, navigation }) {
     navigation,
   };
 }
+
+Deck.propTypes = {
+  title: PropTypes.string.isRequired,
+  deck:PropTypes.object.isRequired,
+  navigation: PropTypes.object.isRequired,
+}
+
 export default connect(mapStateToProps)(Deck);

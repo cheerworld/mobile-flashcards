@@ -11,6 +11,7 @@ import {
 import ButtonLook from "./ButtonLook";
 import { connect } from "react-redux";
 import { addCardAsync } from "../actions";
+import PropTypes from 'prop-types';
 
 const AddCard = (props) => {
   const [question, onChangeQuestion] = React.useState("");
@@ -81,13 +82,17 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state, { route, navigation }) {
-  //console.log(state);
+
   const { title } = route.params;
   return {
-    state,
     title,
     navigation,
   };
+}
+
+AddCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  navigation: PropTypes.object.isRequired,
 }
 
 export default connect(mapStateToProps)(AddCard);

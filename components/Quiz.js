@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import TextButton from "./TextButton";
 import ButtonLook from "./ButtonLook";
 import { shuffleArray } from "../utils/helpers";
+import PropTypes from 'prop-types';
 
 const Quiz = (props) => {
   const [count, onChangeCount] = React.useState(0);
@@ -145,4 +146,11 @@ function mapStateToProps(state, { route, navigation }) {
     navigation,
   };
 }
+
+Quiz.propTypes = {
+  questions: PropTypes.array.isRequired,
+  deck:PropTypes.object.isRequired,
+  navigation: PropTypes.object.isRequired,
+}
+
 export default connect(mapStateToProps)(Quiz);
